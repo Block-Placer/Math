@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Challenge</title>
+
+  <!-- Poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #1b2735, #090a0f);
+      color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      margin: 0;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 20px;
+      opacity: 0.9;
+      margin: 10px 0 20px 0;
+    }
+    input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 18px;
+      outline: none;
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      width: 160px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 18px;
+      background-color: #1abc9c;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #16a085;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+    .new {
+      margin-top: 18px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quick Math Challenge 🧮</h1>
+  <p id="question">Loading question...</p>
+
+  <input type="number" id="answer" placeholder="Your answer">
+  <button onclick="checkAnswer()">Submit</button>
+
+  <div class="result" id="result"></div>
+  <button class="new" onclick="generateQuestion()">New Question</button>
+
+  <script>
+    let correctAnswer = 0;
+
+    function generateQuestion() {
+      const ops = ['+', '-', '×'];
+      const a = Math.floor(Math.random() * 20) + 1;
+      const b = Math.floor(Math.random() * 20) + 1;
+      const op = ops[Math.floor(Math.random() * ops.length)];
+
+      let questionText = `${a} ${op} ${b}`;
+      document.getElementById('question').textContent = questionText;
+      document.getElementById('result').textContent = '';
+      document.getElementById('answer').value = '';
+
+      switch (op) {
+        case '+': correctAnswer = a + b; break;
+        case '-': correctAnswer = a - b; break;
+        case '×': correctAnswer = a * b; break;
+      }
+    }
+
+    function checkAnswer() {
+      const val = document.getElementById('answer').value.trim();
+      const result = document.getElementById('result');
+
+      if (val === '') {
+        result.textContent = 'Please enter a number.';
+        result.style.color = '#f1c40f';
+        return;
+      }
+
+      if (Number(val) === correctAnswer) {
+        result.textContent = '✅ Correct!';
+        result.style.color = '#2ecc71';
+      } else {
+        result.textContent = `❌ Incorrect. The right answer was ${correctAnswer}.`;
+        result.style.color = '#e74c3c';
+      }
+    }
+
+    // Load a question when the page opens
+    generateQuestion();
+  </script>
+</body>
+</html>
